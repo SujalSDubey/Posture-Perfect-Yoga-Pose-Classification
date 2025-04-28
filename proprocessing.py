@@ -23,9 +23,6 @@ def detect(input_tensor, inference_count=3):
     return detection
 
 class Preprocessor(object):
-#     this class preprocess pose samples, it predicts keypoints on the images 
-#     and save those keypoints in a csv file for the later use in the classification task 
-
         def __init__(self, images_in_folder,
                     csvs_out_path):
             self._images_in_folder = images_in_folder
