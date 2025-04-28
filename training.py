@@ -23,7 +23,6 @@ def load_csv(csv_path):
 
 
 def get_center_point(landmarks, left_bodypart, right_bodypart):
-    """Calculates the center point of the two given landmarks."""
     left = tf.gather(landmarks, left_bodypart.value, axis=1)
     right = tf.gather(landmarks, right_bodypart.value, axis=1)
     center = left * 0.5 + right * 0.5
@@ -45,8 +44,6 @@ def get_pose_size(landmarks, torso_size_multiplier=2.5):
     pose_center_new = get_center_point(landmarks, BodyPart.LEFT_HIP, 
                                      BodyPart.RIGHT_HIP)
     pose_center_new = tf.expand_dims(pose_center_new, axis=1)
-    # Broadcast the pose center to the same size as the landmark vector to
-    # perform substraction
     pose_center_new = tf.broadcast_to(pose_center_new,
                                     [tf.size(landmarks) // (17*2), 17, 2])
 
@@ -68,8 +65,6 @@ def normalize_pose_landmarks(landmarks):
                                  BodyPart.RIGHT_HIP)
 
     pose_center = tf.expand_dims(pose_center, axis=1)
-    # Broadcast the pose center to the same size as the landmark vector to perform
-    # substraction
     pose_center = tf.broadcast_to(pose_center, 
                                 [tf.size(landmarks) // (17*2), 17, 2])
     landmarks = landmarks - pose_center
