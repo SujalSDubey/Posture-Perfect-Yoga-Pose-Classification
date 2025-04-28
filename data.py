@@ -1,9 +1,6 @@
 import enum
 from typing import List, NamedTuple
-
 import numpy as np
-
-
 class BodyPart(enum.Enum):
   """Enum representing human body keypoints detected by pose estimation models."""
   NOSE = 0
@@ -57,20 +54,6 @@ def person_from_keypoints_with_scores(
     image_height: float,
     image_width: float,
     keypoint_score_threshold: float = 0.1) -> Person:
-  """Creates a Person instance from single pose estimation model output.
-
-  Args:
-    keypoints_with_scores: Output of the TFLite pose estimation model. A numpy
-      array with shape [17, 3]. Each row represents a keypoint: [y, x, score].
-    image_height: height of the image in pixels.
-    image_width: width of the image in pixels.
-    keypoint_score_threshold: Only use keypoints with above this threshold to
-      calculate the person average score.
-
-  Returns:
-    A Person instance.
-  """
-
   kpts_x = keypoints_with_scores[:, 1]
   kpts_y = keypoints_with_scores[:, 0]
   scores = keypoints_with_scores[:, 2]
